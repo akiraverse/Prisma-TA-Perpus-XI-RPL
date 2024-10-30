@@ -19,21 +19,84 @@ model Petugas{
   password String
   alamat String
   role Role @default(admin)
-   peminjaman Peminjaman[]
- }
+  peminjaman Peminjaman[]
+}
 
- model Peminjaman{
+enum Role{
+  admin
+}
+
+model Peminjaman{
   id_peminjaman Int @id @default(autoincrement())
   id_petugas Int
+  id_buku Int
+  id_anggota Int
   tanggal_pinjam DateTime
   tanggal_kembali DateTime
   petugas Petugas @relation(fields: [id_petugas],references: [id_petugas])
+  buku Buku @relation(fields: [id_buku],references: [id_buku])
+  anggota Anggota @relation(fields: [id_anggota],references: [id_anggota])
+}
 
- }
+model Buku {
+  id_buku Int @id @default(autoincrement())
+  id_rak Int
+  kategori Kategori
+  nama_buku String
+  penulis_buku String
+  penerbit_buku String
+  tahun_penerbit String
+  stok Int
+  cover String
+  peminjaman Peminjaman[]
+  rak Rak @relation(fields: [id_rak],references: [id_rak])
+}
 
- model anggota
+model Anggota {
+  id_anggota Int @id @default(autoincrement())
+  nama_anggota String
+  kelas_anggota Kelas_Anggota
+  jurusan_anggota Jurusan_Anggota
+  no_telpon Int
+  alamat String
+  peminjaman Peminjaman[]
+}
 
- enum Role{
-  admin
- }
+enum Kelas_Anggota {
+  X
+  XI
+  XII
+}
+
+enum Jurusan_Anggota {
+  RPL
+  TKJ
+  PG
+}
+
+model Rak {
+  id_rak Int @id @default(autoincrement())
+  kategori_rak Kategori
+  lokasi_rak Lokasi_Rak
+  buku Buku[]
+}
+
+enum Kategori {
+  Biografi
+  Science
+  Technology
+  Fiction
+  NonFiction
+  Religi
+  History
+}
+
+enum Lokasi_Rak {
+  I
+  II
+  III
+  IV
+}
+
+
 

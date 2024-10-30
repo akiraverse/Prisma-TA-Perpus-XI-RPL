@@ -20,12 +20,11 @@ export const getAllPetugas = async(req,res) =>{
 }
 
 
-export const getPetugasyId = async(req,res) =>{
-
+export const getPetugasById = async(req,res) =>{
     try {
         const result = await prisma.petugas.findUnique({
             where:{
-                id_meja:req.params.id
+                id_petugas: Number(req.params.id)
             }
         })
         res.status(200).json({
@@ -40,14 +39,15 @@ export const getPetugasyId = async(req,res) =>{
         
     }
 }
-export const addMeja = async(req,res) =>{
 
+export const addPetugas = async(req,res) =>{
     try {
-        const {nomor} = req.body
-        const result = await prisma.meja.create({
+        const {nama, password, alamat} = req.body
+        const result = await prisma.petugas.create({
             data:{
-                nomor_meja:nomor
-
+                nama: nama,
+                password: password,
+                alamat: alamat
             }
         })
         res.status(200).json({
@@ -57,21 +57,22 @@ export const addMeja = async(req,res) =>{
     } catch (error) {
         console.log(error);
         res.json({
-            msg: MessageChannel.error
+            msg: message.error
         })
-        
     }
 }
-export const updateMeja = async(req,res) =>{
 
+export const updatePetugas = async(req,res) =>{
     try {
-        const {nomor} = req.body
-        const result = await prisma.meja.update({
+        const {nama, password, alamat} = req.body
+        const result = await prisma.petugas.update({
             where:{
-                id_meja : req.params.id
+                id_petugas: Number(req.params.id)
             },
             data:{
-                nomor_meja:nomor
+                nama: nama,
+                password: password,
+                alamat: alamat
         
             }
         })
@@ -82,17 +83,16 @@ export const updateMeja = async(req,res) =>{
     } catch (error) {
         console.log(error);
         res.json({
-            msg: MessageChannel.error
+            msg: message.error
         })
-        
     }
 }
-export const deleteMeja = async(req,res) =>{
 
+export const deletePetugas = async(req,res) =>{
     try {
-        const result = await prisma.meja.delete({
+        const result = await prisma.petugas.delete({
             where:{
-                id_meja: req.params.id
+                id_petugas: Number(req.params.id)
             }
         })
         res.status(200).json({
@@ -102,8 +102,7 @@ export const deleteMeja = async(req,res) =>{
     } catch (error) {
         console.log(error);
         res.json({
-            msg: MessageChannel.error
+            msg: message.error
         })
-        
     }
 }

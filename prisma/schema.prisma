@@ -20,6 +20,7 @@ model Petugas{
   alamat String
   role Role @default(admin)
   peminjaman Peminjaman[]
+  pengembalian Pengembalian[]
 }
 
 enum Role{
@@ -38,6 +39,19 @@ model Peminjaman{
   anggota Anggota @relation(fields: [id_anggota],references: [id_anggota])
 }
 
+model Pengembalian{
+  id_pengembalian Int @id @default(autoincrement())
+  id_petugas Int
+  id_buku Int
+  id_anggota Int
+  tanggal_pinjam DateTime
+  tanggal_kembali DateTime
+  denda Boolean
+  petugas Petugas @relation(fields: [id_petugas],references: [id_petugas])
+  buku Buku @relation(fields: [id_buku],references: [id_buku])
+  anggota Anggota @relation(fields: [id_anggota],references: [id_anggota])
+}
+
 model Buku {
   id_buku Int @id @default(autoincrement())
   id_rak Int
@@ -49,6 +63,7 @@ model Buku {
   stok Int
   cover String
   peminjaman Peminjaman[]
+  pengembalian Pengembalian[]
   rak Rak @relation(fields: [id_rak],references: [id_rak])
 }
 
@@ -60,6 +75,7 @@ model Anggota {
   no_telpon Int
   alamat String
   peminjaman Peminjaman[]
+  pengembalian Pengembalian[]
 }
 
 enum Kelas_Anggota {
